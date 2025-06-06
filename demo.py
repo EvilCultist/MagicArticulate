@@ -163,6 +163,7 @@ if __name__ == "__main__":
         file_name = os.path.basename(batch_data_label['file_name'][0])
         pred_skel_filename = os.path.join(output_dir, f'{file_name}_skel.obj')
         pred_rig_filename = os.path.join(output_dir, f"{file_name}_pred.txt")
+        pred_rig_norm_filename = os.path.join(output_dir, f"{file_name}_normpred.txt")
         mesh_filename = os.path.join(output_dir, f"{file_name}_mesh.obj")
         
         trans = batch_data_label['trans'][0].cpu().numpy()
@@ -180,6 +181,7 @@ if __name__ == "__main__":
         
         # pred_root_index = pred_bones[0][0]
         # when save rig to txt, denormalize the skeletons to the same scale with input meshes
+        save_skeleton_to_txt(pred_joints, pred_bones, pred_root_index, args.hier_order, vertices, pred_rig_norm_filename)
         pred_joints_denorm = pred_joints * scale + trans
         save_skeleton_to_txt(pred_joints_denorm, pred_bones, pred_root_index, args.hier_order, vertices, pred_rig_filename)
         
